@@ -19,7 +19,7 @@ class HomeController extends BaseController {
 	{
 		$usuario = User::find(1);
 
-		return View::make('home.index')->with('usuario', $usuario);
+		return View::make('home.index')->withEmpresa($usuario->empresa)->withUsuario($usuario);
 	}
 
 }
