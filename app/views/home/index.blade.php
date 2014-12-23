@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<p>{{ $empresa->razao_social }}</p>
 	<p>{{ $usuario->nome }}</p>
+	<p>{{ $usuario->empresa->razao_social }}</p>
 
 @stop
