@@ -37,10 +37,15 @@ img.imagem-usuario
 .navbar { border-radius: 0; }
 
 /*--------------------------------------------
+| Abas
+--------------------------------------------*/
+
+.nav.nav-tabs { margin-bottom: 20px; }
+
+/*--------------------------------------------
 | Campanhas
 --------------------------------------------*/
 
-.tab-campanhas .panel-group { margin-top: 20px; }
 .table,
 .table th { text-align: center; }
 
@@ -51,7 +56,4 @@ img.imagem-usuario
 div.alterar-senha
 {
 	border-right: 1px solid #ccc;
-	margin-top: 20px;
 }
-
-div.upload-foto { margin-top: 20px; }

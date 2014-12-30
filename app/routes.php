@@ -11,4 +11,5 @@
 |
 */
 
+Route::controller('/campanhas', 'CampanhasController');
 Route::controller('/', 'HomeController');

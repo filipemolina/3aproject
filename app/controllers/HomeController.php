@@ -3,8 +3,66 @@
 class HomeController extends BaseController {
 
 	/*--------------------------------------------
-	| Login
+	| Páginas
 	--------------------------------------------*/
+
+	//Index
+
+	public function getIndex()
+	{
+		//Determinar se o usuário está logado
+
+		if(Auth::check())
+		{
+			//Dados Básicos
+
+			$empresas = Empresa::all();
+			$campanhas = Auth::user()->empresa->campanhas;
+
+			//Determinar a foto do usuário, ou usar a foto padrão
+
+			if(isset(Auth::user()->foto))
+				$foto = Auth::user()->foto;
+			else
+				$foto = asset("img/user.gif");
+
+			//Determinar o tipo de usuário, e escolher a action apropriada
+
+			if(Auth::user()->admin)
+			{
+				//View dos administradores
+
+				//Criar a lista para popular o select de empresas
+				$lista_empresas = array('' => 'Selecione uma empresa') + Empresa::lists('razao_social', 'id');
+
+				return View::make('home.admin')->withEmpresas($empresas)
+											   ->withFoto($foto)
+											   ->withListaEmpresas($lista_empresas);
+			}
+			else
+			{
+				if(Auth::user()->empresa->id == 1)				
+				{
+					//Caso seja um funcionário da 3A
+
+					return View::make('home.funcionario')->withEmpresas($empresas)
+													     ->withFoto($foto);
+				}
+				else
+				{
+					//Caso seja um cliente
+
+					return View::make('home.cliente')->withCampanhas($campanhas)
+													 ->withFoto($foto);
+				}
+			}
+		}
+		else
+		{
+			//Redireciona para a tela de login
+			return Redirect::to('/login');
+		}
+	}
 
 	//Mostrar o Formulário de Login
 
@@ -16,6 +74,10 @@ class HomeController extends BaseController {
 		else
 			return Redirect::to('/');
 	}
+
+	/*--------------------------------------------
+	| Login - Logout
+	--------------------------------------------*/
 
 	//Tentar Logar o Usuário
 
@@ -45,35 +107,6 @@ class HomeController extends BaseController {
 		Auth::logout();
 
 		return Redirect::to('/login');
-	}
-
-	/*--------------------------------------------
-	| Páginas
-	--------------------------------------------*/
-
-	//Index
-
-	public function getIndex()
-	{
-		//Determinar se o usuário está logado
-
-		if(Auth::check())
-		{
-			$campanhas = Auth::user()->empresa->campanhas;
-
-			if(isset(Auth::user()->foto))
-				$foto = Auth::user()->foto;
-			else
-				$foto = asset("img/user.gif");
-
-			return View::make('home.index')->withCampanhas($campanhas)
-										   ->withFoto($foto);
-		}
-		else
-		{
-			//Redireciona para a tela de login
-			return Redirect::to('/login');
-		}
 	}
 
 	/*--------------------------------------------
@@ -118,5 +151,9 @@ class HomeController extends BaseController {
 			}
 		}
 	}
+
+	/*--------------------------------------------
+	| Helpers
+	--------------------------------------------*/
 
 }
