@@ -11,5 +11,16 @@
 |
 */
 
-Route::controller('/campanhas', 'CampanhasController');
+//Agrupar todas as rotas que requerem autenticação
+
+Route::group(array('before' => 'auth'), function(){
+
+	Route::controller('/campanhas', 'CampanhasController');
+	Route::controller('/empresas', 'EmpresasController');
+	Route::controller('/users', 'UsersController');
+
+});
+
+//Rota padrão que não necessita de autenticação
+
 Route::controller('/', 'HomeController');

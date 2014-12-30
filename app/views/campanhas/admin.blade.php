@@ -8,7 +8,6 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#campanhas" aria-controls="campanhas" role="tab" data-toggle="tab">Campanhas</a></li>
 			<li role="presentation"><a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a></li>
-			<li role="presentation"><a href="#opcoes" aria-controls="opcoes" role="tab" data-toggle="tab">Opções</a></li>
 		</ul>
 
 		<!-- Painéis -->
@@ -41,11 +40,12 @@
 				    <div id="{{ 'collapse'.$i }}" class="panel-collapse collapse @if($i == 0) in @endif" role="tabpanel" aria-labelledby="{{ 'empresa'.$i }}">
 				      <div class="panel-body">
 				        
-					      	<table class="table table-striped">
+					      	<table class="table table-striped" data-empresa="{{ $empresa->id }}">
 								<thead>
 									<tr>
 										<th>Nome</th>
 										<th>Data de Criação</th>
+										<th>Ações</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -57,6 +57,22 @@
 										<tr>
 											<td> {{ $campanha->nome }} </td>
 											<td> {{ $campanha->created_at }} </td>
+											<td>
+												{{--------------- Botões ----------------}}
+
+												{{-- Editar --}}
+
+												<button type="button" class="btn btn-default btn-xs" aria-label="Editar">
+												 	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+												</button>
+
+												{{-- Excluir --}}
+
+												<button type="button" class="btn btn-danger btn-xs" aria-label="Excluir">
+												 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+												</button>
+
+											</td>
 										</tr>
 
 									@empty
@@ -70,7 +86,7 @@
 								</tbody>
 							</table>
 
-							<button class="btn btn-primary">Criar Nova Campanha</button>
+							<button class="btn btn-primary" id="btn-cadastro">Criar Nova Campanha</button>
 
 				      </div>
 				    </div>
@@ -91,8 +107,14 @@
 			{{-------------------- Aba de Cadastro de novas campanhas --------------------}}
 
 			<div role="tabpanel" class="tab-pane" id="cadastro">
+
+				{{-- Nesta div serão mostradas as mensagens para o usuário --}}
+
+				<div class="alertas row"></div>
+
+				{{-- Formulário --}}
 				
-				{{ Form::open(array('url' => '/campanhas', 'class' => 'col-md-6 col-md-offset-3')) }}
+				{{ Form::open(array('url' => '/campanhas', 'class' => 'col-md-6 col-md-offset-3', 'id' => 'form-cadastro-campanha')) }}
 
 					<div class="form-group">
 						{{ Form::label('nome', 'Nome:') }}
@@ -116,60 +138,6 @@
 					</div>
 
 				{{ Form::close() }}
-
-			</div>
-
-			{{--------------------- Aba de Opções do Usuário ----------------------}}
-
-			<div role="tabpanel" class="tab-pane" id="opcoes">
-
-				<div class="row">
-
-					<div class="col-md-5 alterar-senha">
-
-						<h2 class="alterar-senha">Alterar Senha</h2>
-					
-						{{ Form::open(array('url' => '/mudarsenha')) }}
-						
-							<div class="form-group">
-								{{ Form::label('atual', 'Senha Atual') }}
-								{{ Form::password('atual', array('class' => 'form-control', 'placeholder' => 'Senha Atual')) }}
-							</div>
-
-							<div class="form-group">
-								{{ Form::label('nova', 'Nova Senha') }}
-								{{ Form::password('nova', array('class' => 'form-control', 'placeholder' => 'Nova Senha')) }}
-							</div>
-
-							<div class="form-group">
-								{{ Form::label('repetida', 'Repita a Senha') }}
-								{{ Form::password('repetida', array('class' => 'form-control', 'placeholder' => 'Repita a senha')) }}
-							</div>
-
-							{{ Form::button('Enviar', array('class' => 'btn btn-primary', 'type' => 'submit')) }}
-						
-						{{ Form::close() }}
-						
-					</div>
-
-					<div class="col-md-5 upload-foto">
-
-						<h2 class="alterar-senha">Foto</h2>
-					
-						{{ Form::open(array('files' => true)) }}
-						
-							<div class="form-group">
-								{{ Form::label('foto', 'Arquivo') }}
-								{{ Form::file('foto') }}
-							</div>
-
-							{{ Form::button('Enviar', array('class' => 'btn btn-primary', 'type' => 'submit')) }}
-						
-						{{ Form::close() }}
-						
-					</div>
-
-				</div>
 
 			</div>
 

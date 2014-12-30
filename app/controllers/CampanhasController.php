@@ -31,9 +31,50 @@ class CampanhasController extends BaseController
 
 	public function getIndex()
 	{
-		$campanhas = Campanha::paginate(10);
+		//Caso seja uma chamada ajax
 
-		return json_encode($campanhas);
+		if(Request::ajax())
+		{
+			$campanhas = Campanha::paginate(10);
+
+			return json_encode($campanhas);
+		}
+
+		//Caso seja uma chamada normal
+
+		$empresas = Empresa::all();
+		$campanhas = Auth::user()->empresa->campanhas;
+
+		//Determinar o tipo de usuário, e escolher a action apropriada
+
+		if(Auth::user()->admin)
+		{
+			//View dos administradores
+
+			//Criar a lista para popular o select de empresas
+			$lista_empresas = array('' => 'Selecione uma empresa') + Empresa::lists('razao_social', 'id');
+
+			return View::make('campanhas.admin')->withEmpresas($empresas)
+										   		->withListaEmpresas($lista_empresas);
+		}
+		else
+		{
+			if(Auth::user()->empresa->id == 1)				
+			{
+				//Caso seja um funcionário da 3A
+
+				return View::make('campanhas.funcionario')->withEmpresas($empresas)
+												     ->withFoto($foto);
+			}
+			else
+			{
+				//Caso seja um cliente
+
+				return View::make('campanhas.cliente')->withCampanhas($campanhas)
+												 ->withFoto($foto);
+			}
+		}
+		
 	}
 
 	//Post para "/campanhas"
@@ -69,7 +110,7 @@ class CampanhasController extends BaseController
 			$campanha->save();
 
 			//Retornar sem erros
-			return json_encode(array('erros' => false));
+			return json_encode(array('erros' => false, 'campanha' => $campanha->toJson()));
 		}
 
 	}

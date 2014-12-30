@@ -4,6 +4,7 @@
 	<title>Campanhas</title>
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/animate.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
