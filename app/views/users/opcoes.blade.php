@@ -20,9 +20,11 @@
 
 					<div class="col-md-5 alterar-senha">
 
+						<div id="alerta-senha"></div>
+
 						<h2 class="alterar-senha">Alterar Senha</h2>
 					
-						{{ Form::open(array('url' => '/mudarsenha')) }}
+						{{ Form::open(array('url' => '/usuarios/mudarsenha', 'id' => 'form-mudar-senha')) }}
 						
 							<div class="form-group">
 								{{ Form::label('atual', 'Senha Atual') }}
@@ -47,9 +49,11 @@
 
 					<div class="col-md-5 upload-foto">
 
+						<div id="alerta-foto"></div>
+
 						<h2 class="alterar-senha">Foto</h2>
 					
-						{{ Form::open(array('files' => true)) }}
+						{{ Form::open(array('url' => '/usuarios/mudarfoto', 'files' => true, 'id' => 'form-mudar-foto')) }}
 						
 							<div class="form-group">
 								{{ Form::label('foto', 'Arquivo') }}

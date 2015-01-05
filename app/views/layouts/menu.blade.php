@@ -3,7 +3,7 @@
   //Determinar a foto do usuário, ou usar a foto padrão
 
     if(isset(Auth::user()->foto))
-      $foto = Auth::user()->foto;
+      $foto = asset(Auth::user()->foto);
     else
       $foto = asset("img/user.gif");
 
@@ -37,7 +37,7 @@
             <li @if(explode('@', Route::currentRouteAction())[0] == 'CampanhasController') class="active" @endif><a href="/campanhas">Campanhas</a></li>
             <li @if(explode('@', Route::currentRouteAction())[0] == 'EmpresasController')  class="active" @endif><a href="/empresas">Empresas</a></li>
             <li @if(explode('@', Route::currentRouteAction())[0] == 'PecasController')     class="active" @endif><a href="/pecas">Peças</a></li>
-            <li @if(explode('@', Route::currentRouteAction())[0] == 'UsersController')     class="active" @endif><a href="/users/opcoes">Opções</a></li>
+            <li @if(explode('@', Route::currentRouteAction())[0] == 'UsersController')     class="active" @endif><a href="/usuarios/opcoes">Opções</a></li>
         </ul>
 
         {{-- Formulário de Pesquisa --}}

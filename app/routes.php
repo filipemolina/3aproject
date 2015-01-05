@@ -17,7 +17,7 @@ Route::group(array('before' => 'auth'), function(){
 
 	Route::controller('/campanhas', 'CampanhasController');
 	Route::controller('/empresas', 'EmpresasController');
-	Route::controller('/users', 'UsersController');
+	Route::controller('/usuarios', 'UsersController');
 
 });
 

@@ -70,53 +70,6 @@ class HomeController extends BaseController {
 	}
 
 	/*--------------------------------------------
-	| Configurações
-	--------------------------------------------*/
-
-	public function postMudarsenha()
-	{
-		if(Auth::check())
-		{
-			//Obter o usuário atual
-
-			$usuario = Auth::user();
-
-			//Obter os dados do usuário
-
-			$input = Input::get();
-
-			//Verificar a senha atual do usuário
-
-			if ( Hash::check( $input['atual'], $usuario->password ) )
-			{
-				//Verificar se a senha foi digitada igualmente nos dois campos
-
-				if ( ($input['nova'] === $input['repetida']) && ( $input['nova'] != '' ) )
-				{
-					//Alterar a senha do usuário
-
-					$usuario->password = Hash::make($input['nova']);
-					$usuario->save();
-
-					return Redirect::to('/');
-				}
-				else
-				{
-					echo "As senhas são diferentes";
-				}
-			}
-			else
-			{
-				echo "Senha Não confere";
-			}
-		}
-		else
-		{
-			return Redirect::to('/login');
-		}
-	}
-
-	/*--------------------------------------------
 	| Helpers
 	--------------------------------------------*/
 
